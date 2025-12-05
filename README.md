@@ -1,5 +1,7 @@
 # Doro-CPU-Gatekeeper
 
+![https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif](https://github.com/Huydofumi/Doro-CPU-Gatekeeper/blob/main/showcase.gif)
+
 Sản phẩm được vai cốt từ claude 4.5 sonnet
 
 Repo này không bao gồm file animation gốc, nhưng binary để download về thì đã gồm sẵn file, mở file .exe và enjoy.
