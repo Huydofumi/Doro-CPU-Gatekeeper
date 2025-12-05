@@ -4,7 +4,7 @@
 
 Sản phẩm được vai cốt từ claude 4.5 sonnet
 
-Repo này không bao gồm file animation gốc, nhưng binary để download về thì đã gồm sẵn file, mở file .exe và enjoy.
+Repo này không bao gồm file animation gốc, nhưng file .exe để [download](https://github.com/Huydofumi/Doro-CPU-Gatekeeper/releases/tag/release) về thì đã gồm sẵn file chỉ cần chạy file .exe và enjoy.
 
 # Cơ chế hoạt động
 
