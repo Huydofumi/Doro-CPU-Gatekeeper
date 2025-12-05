@@ -44,7 +44,7 @@ Repo này không bao gồm file animation gốc, nhưng file .exe để [downloa
   
   > _`active_frames` là bắt buộc hoặc bạn có thể tự sửa code cho nó thành cái gì đó khác_
 
-* Sử dụng frame_extract.go với file animation B với câu lệnh trong CMD ( Đã trỏ vào thư mục )
+* Sử dụng frame_extract.go với file animation C với câu lệnh trong CMD ( Đã trỏ vào thư mục )
 
   `go run extract_frames.go C.mp4 heavy_active_frames`
   
