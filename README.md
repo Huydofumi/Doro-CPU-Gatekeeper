@@ -2,8 +2,34 @@
 
 Sản phẩm được vai cốt từ claude 4.5 sonnet
 
+Repo này không bao gồm file animation gốc, nhưng binary để download về thì đã gồm sẵn file, mở file .exe và enjoy.
+
 # Cơ chế hoạt động
 
 * Khi CPU dưới hoặc bằng 20% sẽ play sequence của file animation 1 đã được extract toàn bộ frame.
 
 * Khi CPU trên 20% sẽ play sequence của file animation 2 đã được extract toàn bộ frame và giao động từ 50% speed đến 150% speed của sequence đó, để có thể biết rằng CPU đang bị heavy load hoặc là đang thảnh thơi dã ngoại.
+
+# Tự sửa animation
+
+* Bạn cần 2 file animation ( A và B ), A là sử dụng khi CPU dưới 20%, B là trên 20%.
+
+* Định dạng của cả 2 file đều phải là MP4, được resize trước ở 32x32 pixel, 30fps (Có thể dùng after effect để resize cho tiện)
+
+* Sử dụng frame_extract.go với file animation A với câu lệnh trong CMD ( Đã trỏ vào thư mục )
+  
+  `go run extract_frames.go A.mp4 idle_frames`
+  
+  _`idle_frames` là bắt buộc hoặc bạn có thể tự sửa code cho nó thành cái gì đó khác_
+  
+* Sử dụng frame_extract.go với file animation B với câu lệnh trong CMD ( Đã trỏ vào thư mục )
+
+  `go run extract_frames.go B.mp4 active_frames`
+  
+  _`active_frames` là bắt buộc hoặc bạn có thể tự sửa code cho nó thành cái gì đó khác_
+
+* Sau khi đã có 2 thư mục với frame đã được extract thì build binary với câu lệnh sau
+
+  `go build -ldflags -H=windowsgui -o yourapplicationname.exe main.go` _Thay `yourapplicationname` bằng tên ứng dụng bạn tuỳ thích_
+
+* Chạy file .exe và thưởng thức
