@@ -16,20 +16,30 @@ Repo này không bao gồm file animation gốc, nhưng binary để download v�
 
 * Định dạng của cả 2 file đều phải là MP4, được resize trước ở 32x32 pixel, 30fps (Có thể dùng after effect để resize cho tiện)
 
+* Cài đặt [golang](https://go.dev/dl/)
+
+* Vào folder project mở cmd lên và gõ các dòng sau để download library về
+
+  `go mod init yourprojectname`
+  `go get github.com/getlantern/systray`
+  `go get github.com/shirou/gopsutil/v3/cpu`
+  `go mod tidy`
+
 * Sử dụng frame_extract.go với file animation A với câu lệnh trong CMD ( Đã trỏ vào thư mục )
   
   `go run extract_frames.go A.mp4 idle_frames`
   
-  _`idle_frames` là bắt buộc hoặc bạn có thể tự sửa code cho nó thành cái gì đó khác_
+  > _`idle_frames` là bắt buộc hoặc bạn có thể tự sửa code cho nó thành cái gì đó khác_
   
 * Sử dụng frame_extract.go với file animation B với câu lệnh trong CMD ( Đã trỏ vào thư mục )
 
   `go run extract_frames.go B.mp4 active_frames`
   
-  _`active_frames` là bắt buộc hoặc bạn có thể tự sửa code cho nó thành cái gì đó khác_
+  > _`active_frames` là bắt buộc hoặc bạn có thể tự sửa code cho nó thành cái gì đó khác_
 
 * Sau khi đã có 2 thư mục với frame đã được extract thì build binary với câu lệnh sau
 
-  `go build -ldflags -H=windowsgui -o yourapplicationname.exe main.go` _Thay `yourapplicationname` bằng tên ứng dụng bạn tuỳ thích_
+  `go build -ldflags -H=windowsgui -o yourapplicationname.exe main.go`
+  > _Thay `yourapplicationname` bằng tên ứng dụng bạn tuỳ thích_
 
 * Chạy file .exe và thưởng thức
