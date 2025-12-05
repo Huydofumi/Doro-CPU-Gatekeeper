@@ -10,11 +10,13 @@ Repo này không bao gồm file animation gốc, nhưng file .exe để [downloa
 
 * Khi CPU dưới hoặc bằng 20% sẽ play sequence của file animation 1 đã được extract toàn bộ frame.
 
-* Khi CPU trên 20% sẽ play sequence của file animation 2 đã được extract toàn bộ frame và giao động từ 50% speed đến 150% speed của sequence đó, để có thể biết rằng CPU đang bị heavy load hoặc là đang thảnh thơi dã ngoại.
+* Khi CPU trên 20% dưới 90% sẽ play sequence của file animation 2 đã được extract toàn bộ frame và giao động từ 50% speed đến 200% speed của sequence đó, để có thể biết rằng CPU đang bị heavy load hoặc là đang thảnh thơi dã ngoại.
+
+* Khi CPU trên 90% sẽ play sequence của file animation 3 đã được extract toàn bộ frame.
 
 # Tự sửa animation
 
-* Bạn cần 2 file animation ( A và B ), A là sử dụng khi CPU dưới 20%, B là trên 20% và nên bỏ chung cùng folder project.
+* Bạn cần 2 file animation ( A và B và C ), A là sử dụng khi CPU dưới 20%, B là trên 20%, C là trên 90% và nên bỏ chung cùng folder project.
 
 * Định dạng của cả 2 file đều phải là MP4, được resize trước ở 32x32 pixel, 30fps (Có thể dùng after effect để resize cho tiện)
 
@@ -41,6 +43,12 @@ Repo này không bao gồm file animation gốc, nhưng file .exe để [downloa
   `go run extract_frames.go B.mp4 active_frames`
   
   > _`active_frames` là bắt buộc hoặc bạn có thể tự sửa code cho nó thành cái gì đó khác_
+
+* Sử dụng frame_extract.go với file animation B với câu lệnh trong CMD ( Đã trỏ vào thư mục )
+
+  `go run extract_frames.go C.mp4 heavy_active_frames`
+  
+  > _`heavy_active_frames` là bắt buộc hoặc bạn có thể tự sửa code cho nó thành cái gì đó khác_
 
 * Sau khi đã có 2 thư mục với frame đã được extract thì build binary với câu lệnh sau
 
