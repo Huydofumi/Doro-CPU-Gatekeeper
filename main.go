@@ -23,17 +23,21 @@ var idleFramesFS embed.FS
 //go:embed active_frames/*.ico
 var activeFramesFS embed.FS
 
+//go:embed heavy_active_frames/*.ico
+var heavyActiveFramesFS embed.FS
+
 type Flipbook struct {
 	frames    [][]byte
 	frameRate time.Duration
 }
 
 var (
-	idleBook   *Flipbook
-	activeBook *Flipbook
-	currentCPU float64
-	logFile    *os.File
-	enableLog  bool
+	idleBook        *Flipbook
+	activeBook      *Flipbook
+	heavyActiveBook *Flipbook
+	currentCPU      float64
+	logFile         *os.File
+	enableLog       bool
 )
 
 // Windows API để tạo mutex
@@ -127,6 +131,12 @@ func main() {
 	}
 	log.Printf("✓ Loaded active_frames: %d frames", len(activeBook.frames))
 
+	heavyActiveBook, err = loadFlipbookFromEmbedded(heavyActiveFramesFS, "heavy_active_frames", 50*time.Millisecond)
+	if err != nil {
+		log.Fatalf("❌ Lỗi khi load heavy_active_frames: %v", err)
+	}
+	log.Printf("✓ Loaded heavy_active_frames: %d frames", len(heavyActiveBook.frames))
+
 	log.Println("Starting system tray...")
 	systray.Run(onReady, onExit)
 }
@@ -140,7 +150,7 @@ func onReady() {
 	mCPU := systray.AddMenuItem("CPU: 0%", "Current CPU usage")
 	mCPU.Disable()
 	systray.AddSeparator()
-	mQuit := systray.AddMenuItem("Thoát", "Exit application")
+	mQuit := systray.AddMenuItem("Exit", "Exit application")
 
 	log.Println("Starting CPU monitoring...")
 	go monitorCPU()
@@ -216,11 +226,18 @@ func updateIcon() {
 		var speedMultiplier float64
 
 		if currentCPU <= 20 {
+			// Idle mode: CPU ≤ 20%
 			currentBook = idleBook
 			speedMultiplier = 1.0
+		} else if currentCPU > 90 {
+			// Heavy active mode: CPU > 90%
+			currentBook = heavyActiveBook
+			speedMultiplier = 2.0 // Max speed
 		} else {
+			// Active mode: 20% < CPU ≤ 90%
 			currentBook = activeBook
-			speedMultiplier = 0.5 + ((currentCPU-21)/(100-21))*1.5
+			// Linear interpolation: 20% = 0.5x speed, 90% = 2.0x speed
+			speedMultiplier = 0.5 + ((currentCPU-20)/(90-20))*1.5
 			if speedMultiplier < 0.5 {
 				speedMultiplier = 0.5
 			}
@@ -241,6 +258,8 @@ func updateIcon() {
 			lastBook = currentBook
 			if currentBook == idleBook {
 				log.Printf("Switched to idle mode (CPU: %.1f%%)", currentCPU)
+			} else if currentBook == heavyActiveBook {
+				log.Printf("Switched to heavy active mode (CPU: %.1f%%, speed: %.2fx)", currentCPU, speedMultiplier)
 			} else {
 				log.Printf("Switched to active mode (CPU: %.1f%%, speed: %.2fx)", currentCPU, speedMultiplier)
 			}
