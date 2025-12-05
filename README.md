@@ -21,8 +21,11 @@ Repo này không bao gồm file animation gốc, nhưng binary để download v�
 * Vào folder project mở cmd lên và gõ các dòng sau để download library về
 
   `go mod init yourprojectname`
+  
   `go get github.com/getlantern/systray`
+  
   `go get github.com/shirou/gopsutil/v3/cpu`
+  
   `go mod tidy`
 
 * Sử dụng frame_extract.go với file animation A với câu lệnh trong CMD ( Đã trỏ vào thư mục )
